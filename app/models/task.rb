@@ -54,5 +54,4 @@ class Task < ApplicationRecord
     return if assignee.blank? || project.blank?
     errors.add(:assignee, "must be a member of the project") unless project.members.exists?(assignee.id)
   end
-
 end

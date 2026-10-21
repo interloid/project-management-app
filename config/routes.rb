@@ -23,11 +23,10 @@ Rails.application.routes.draw do
   resources :tasks
 
  resources :projects do
-  resources :comments, only: [:create, :edit, :update, :destroy]
+  resources :comments, only: [ :create, :edit, :update, :destroy ]
 end
 
 resources :tasks do
-  resources :comments, only: [:create, :edit, :update, :destroy]
+  resources :comments, only: [ :create, :edit, :update, :destroy ]
 end
 end
-
