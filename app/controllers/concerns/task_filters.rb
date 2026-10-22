@@ -23,3 +23,4 @@ module TaskFilters
     tasks
   end
 end
+

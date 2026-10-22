@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "comments/create"
-  get "comments/destroy"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -19,14 +17,10 @@ Rails.application.routes.draw do
     member do
       get :members
     end
+    resources :comments, only: [ :create, :edit, :update, :destroy ]
   end
-  resources :tasks
 
- resources :projects do
-  resources :comments, only: [ :create, :edit, :update, :destroy ]
-end
-
-resources :tasks do
-  resources :comments, only: [ :create, :edit, :update, :destroy ]
-end
+  resources :tasks do
+    resources :comments, only: [ :create, :edit, :update, :destroy ]
+  end
 end
