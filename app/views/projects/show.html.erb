@@ -84,9 +84,9 @@
 </div>
 <div class="card">
   <h2>Comments</h2>
-  <% if @project.comments.any? %>
+  <% if @comments.any? %>
     <div class="comments-list">
-      <% @project.comments.order(created_at: :desc).each do |comment| %>
+      <% @comments.each do |comment| %>
         <div class="comment-item">
           <div class="comment-header">
             <strong> <%= comment.user.name %> </strong>

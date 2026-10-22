@@ -1,12 +1,16 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_project, only: %i[show edit update destroy members]
 
   def index
-    @projects = policy_scope(Project)
+    @projects = policy_scope(Project).includes(:owner)
+    project_ids = @projects.select(:id)
+    @member_counts = ProjectMember.where(project_id: project_ids).group(:project_id).count
+    @task_counts = Task.where(project_id: project_ids).group(:project_id).count
   end
 
   def show
     authorize @project
+    @comments = @project.comments.includes(:user).order(created_at: :desc)
   end
 
   def new
@@ -55,8 +59,6 @@ class ProjectsController < ApplicationController
   end
 
   def members
-    @project = Project.find(params[:id])
-
     authorize @project, :show?
 
     render json: @project.members.select(:id, :name)
@@ -84,11 +86,9 @@ class ProjectsController < ApplicationController
   end
 
   def remove_attachments
-    attachment_ids = params.dig(:project, :remove_attachment_ids)
-    attachment_ids = Array(attachment_ids).reject(&:blank?)
-    attachment_ids.each do |attachment_id|
-      attachment = @project.attachments.find_by(id: attachment_id)
-      attachment&.purge
-    end
+    attachment_ids = Array(params.dig(:project, :remove_attachment_ids)).reject(&:blank?)
+    return if attachment_ids.empty?
+
+    @project.attachments_attachments.where(id: attachment_ids).each(&:purge)
   end
 end

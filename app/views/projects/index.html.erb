@@ -38,13 +38,13 @@
             <div class="meta-item">
               <span class="meta-label">Members</span>
               <span class="meta-value">
-                <%= project.members.count %>
+                <%= @member_counts.fetch(project.id, 0) %>
               </span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Tasks</span>
               <span class="meta-value">
-                <%= project.tasks.count %>
+                <%= @task_counts.fetch(project.id, 0) %>
               </span>
             </div>
           </div>
