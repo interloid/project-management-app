@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @projects = policy_scope(Project)
+    @projects = policy_scope(Project).includes(:owner)
   end
 
   def show
