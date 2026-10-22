@@ -16,10 +16,10 @@ class TaskDeadlineReminderJob < ApplicationJob
   private
 
   def send_deadline_reminder(task)
-    TaskMailer.deadline_tomorrow( task, task.assignee.email ).deliver_now
+    TaskMailer.deadline_tomorrow(task, task.assignee.email).deliver_now
   end
 
   def send_overdue_reminder(task)
-    TaskMailer.task_overdue( task, task.assignee.email ).deliver_now
+    TaskMailer.task_overdue(task, task.assignee.email).deliver_now
   end
 end

@@ -9,29 +9,20 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(
-      :sign_up,
-      keys: [ :name ]
-    )
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
   end
 
   def after_sign_in_path_for(resource)
     root_path
   end
 
-  # def after_sign_up_path_for(resource)
-  #   new_user_session_path
-  # end
-
-  # IMPORTANT for Confirmable
   def after_inactive_sign_up_path_for(resource)
     new_user_session_path
   end
 
+  private
+
   def user_not_authorized
-      redirect_back(
-        fallback_location: root_path,
-        alert: "You are not authorized to perform this action."
-      )
+    redirect_back(fallback_location: root_path, alert: "You are not authorized to perform this action.")
   end
 end
