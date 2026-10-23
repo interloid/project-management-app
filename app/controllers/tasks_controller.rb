@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   include TaskFilters
+  include AttachmentManagement
   before_action :set_task, only: [ :show, :edit, :update, :destroy ]
 
   def index
@@ -21,11 +22,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
-    if @task.invalid?
-      load_form_data
-      render :new, status: :unprocessable_entity
-      return
-    end
+    return render_invalid_task if @task.invalid?
 
     authorize @task
 
@@ -33,8 +30,7 @@ class TasksController < ApplicationController
       TaskCreatedJob.perform_later(@task.id)
       redirect_to @task, notice: "Task created successfully."
     else
-      load_form_data
-      render :new, status: :unprocessable_entity
+      render_invalid_task
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -49,13 +45,13 @@ class TasksController < ApplicationController
   def update
     authorize @task
     @task.assign_attributes(task_attributes)
-    remove_attachments
-    attach_new_files
+
     if @task.save
+      update_attachments
+
       redirect_to @task, notice: "Task updated successfully."
     else
-      load_form_data
-      render :edit, status: :unprocessable_entity
+      render_edit_errors
     end
   end
 
@@ -85,9 +81,21 @@ class TasksController < ApplicationController
     end
   end
 
+  def render_invalid_task
+    load_form_data
+    render :new, status: :unprocessable_entity
+  end
+
+  def render_edit_errors
+    load_form_data
+    render :edit, status: :unprocessable_entity
+  end
+
   def load_form_data
-    @projects  = policy_scope(Project)
-    @assignees = @task.project ? @task.project.members : User.none
+    @projects = policy_scope(Project)
+
+    project = @task.project
+    @assignees = project ? project.members : User.none
   end
 
   def task_params
@@ -95,19 +103,14 @@ class TasksController < ApplicationController
   end
 
   def task_attributes
-    params.require(:task).permit(:title, :description, :priority, :status, :start_date, :end_date, :project_id, :assignee_id)
+    task_params.except(:attachments)
   end
 
-  def attach_new_files
-    files = params.dig(:task, :attachments)
-    files = Array(files).reject(&:blank?)
-    return if files.empty?
-    @task.attachments.attach(files)
+  def attachment_record
+    @task
   end
 
-  def remove_attachments
-    attachment_ids = Array(params.dig(:task, :remove_attachment_ids)).reject(&:blank?)
-    return if attachment_ids.empty?
-    @task.attachments_attachments.where(id: attachment_ids).each(&:purge)
+  def attachment_param_key
+    :task
   end
 end
