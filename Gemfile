@@ -67,6 +67,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'rack-mini-profiler', require: false
+  gem "traceroute"
 end
 
 group :test do
