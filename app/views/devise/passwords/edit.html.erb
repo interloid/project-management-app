@@ -2,24 +2,33 @@
   <div class="auth-card">
     <div class="auth-header">
       <h2>Change Your Password</h2>
-      <p> Create a secure, memorable password. </p>
+      <p>Create a secure, memorable password.</p>
     </div>
-    <%= form_for( resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "auth-form" } ) do |f| %>
-      <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "auth-form" } do |f| %>
       <%= f.hidden_field :reset_password_token %>
       <div class="form-group">
         <%= f.label :password, "New Password" %>
         <% if @minimum_password_length %>
-          <small class="password-hint"> <%= @minimum_password_length %> characters minimum </small>
+          <small class="password-hint">
+            <%= @minimum_password_length %> characters minimum
+          </small>
         <% end %>
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "Enter your new password", class: "form-control" %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "Enter your new password",
+              class: ("form-control field-error" if resource.errors[:password].any?) || "form-control" %>
+        <% resource.errors.full_messages_for(:password).each do |message| %>
+          <small class="field-error-message"><%= message %></small>
+        <% end %>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, "Confirm New Password" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm your new password", class: "form-control" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm your new password",
+              class: ("form-control field-error" if resource.errors[:password_confirmation].any?) || "form-control" %>
+        <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+          <small class="field-error-message"><%= message %></small>
+        <% end %>
       </div>
       <div class="form-actions">
-        <%= f.submit "Change My Password", class: "button button-primary auth-submit" %>
+        <%= f.submit "Change My Password", class: "button auth-button" %>
       </div>
     <% end %>
     <div class="auth-links">

@@ -7,7 +7,12 @@
     </div>
     <div class="form-group">
       <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "current-password", placeholder: "Enter your password" %>
+      <div class="password-wrapper">
+        <%= f.password_field :password, id: "login_password", autocomplete: "current-password", placeholder: "Enter your password" %>
+        <button type="button" id="toggle_password" class="toggle-password" data-target="login_password" aria-label="Show password" aria-pressed="false">
+          <i class="fa-regular fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
     <% if devise_mapping.rememberable? %>
       <div class="remember-me">

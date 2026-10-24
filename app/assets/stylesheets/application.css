@@ -64,6 +64,7 @@ main {
 }
 
 .auth-card {
+  position: relative;
   max-width: 450px;
   margin: 50px auto;
   background: white;
@@ -1028,6 +1029,141 @@ main {
   margin-bottom: 10px;
 }
 
+.password-wrapper {
+  position: relative;
+  /* display: flex; */
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  bottom: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  line-height: 1;
+  color: #0e0f0f;
+background: transparent;
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid #4f46e5;
+  border-radius: 4px;
+}
+
+.field-error-message {
+  display: block;
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.field-error {
+  border: 1px solid #dc2626 !important;
+  outline-color: #dc2626;
+}
 
 
+.members-dropdown-button.field-error {
+  border: 1px solid red !important;
+  border-radius: 4px;
+}
 
+/* Authentication links container */
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  width: 100%;
+}
+
+/* Individual link rows */
+.auth-link-item {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Shared link styling */
+.auth-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+.auth-link-forgot-password {
+  position: absolute;
+  bottom: 192px;
+  right: 35px;
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+
+}
+
+/* Hover effect */
+.auth-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Highlight Sign Up */
+.auth-link-primary {
+  margin-left: 4px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* Forgot Password link */
+.forgot-password {
+  text-align: right;
+  margin-top: -8px;
+}
+
+/* Keep the authentication card links within the card */
+.auth-card .auth-links {
+  box-sizing: border-box;
+}
+
+
+/* Main label */
+.description-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Description text */
+.label-title {
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Optional text */
+.optional-label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+
+.required-star {
+  color: #dc2626;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 2px;
+}

@@ -1,19 +1,17 @@
 <%= form_with model: project, id: "project-form", local: true do |form| %>
-  <% if project.errors.any? %>
-    <div class="flash flash-error">
-      <ul>
-        <% project.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
   <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, placeholder: "Enter Project name", autofocus: true %>
+    <%= form.label :name do %>
+      Name<span class="required-star">*</span>
+    <% end %>
+    <%= form.text_field :name, placeholder: "Enter Project name", autofocus: true, class: ("field-error" if project.errors[:name].any?) %>
+    <% project.errors.full_messages_for(:name).each do |message| %>
+      <small class="field-error-message"><%= message %></small>
+    <% end %>
   </div>
   <div class="form-group">
-    <%= form.label :description %>
+    <%= form.label :description, class: "description-label" do %>
+      <span class="label-title">Description</span><span class="optional-label">(optional)</span>
+    <% end %>
     <%= form.text_area :description, placeholder: "Description.." %>
   </div>
   <div class="form-group">
@@ -21,54 +19,72 @@
     <%= form.select :status, Project.statuses.keys.map { |status| [status.humanize, status] } %>
   </div>
   <div class="form-group">
-    <%= form.label :start_date %>
-    <%= form.date_field :start_date %>
-  </div>
-  <div class="form-group">
-    <%= form.label :end_date %>
-    <%= form.date_field :end_date %>
-  </div>
-<div class="form-group">
-  <%= form.label :attachments, "Attachments" %>
-  <% if project.persisted? && project.attachments.attached? %>
-    <div class="existing-attachments">
-      <% project.attachments.each do |attachment| %>
-        <div class="attachment-name">
-          <%= attachment.filename %>
-            <label> <%= check_box_tag "project[remove_attachment_ids][]", attachment.id, false, id: "remove_attachment_#{attachment.id}" %></label>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-  <%= form.file_field :attachments, multiple: true, direct_upload: true, id: "project_attachments" %>
-  <small> You can upload one or more files. </small>
-  <div id="pending-project-attachments">
-    <% if params.dig(:project, :attachments).present? %>
-      <% Array(params[:project][:attachments]).each do |signed_id| %>
-        <% next if signed_id.blank? %>
-        <% blob = ActiveStorage::Blob.find_signed(signed_id) rescue nil %>
-        <% if blob %>
-          <div class="pending-attachment" data-signed-id="<%= signed_id %>">
-            <span> 📎 <%= blob.filename %> </span>
-            <button type="button" class="remove-project-attachment"> X </button>
-            <%= hidden_field_tag "project[attachments][]", signed_id, data: { attachment_id: signed_id } %>
-          </div>
-        <% end %>
-      <% end %>
+    <%= form.label :start_date do %>
+      Start date<span class="required-star">*</span>
+    <% end %>
+    <%= form.date_field :start_date, class: ("field-error" if project.errors[:start_date].any?) %>
+    <% project.errors.full_messages_for(:start_date).each do |message| %>
+      <small class="field-error-message"><%= message %></small>
     <% end %>
   </div>
-</div>
   <div class="form-group">
-    <%= form.label :member_ids, "Project Members" %>
+    <%= form.label :end_date do %>
+      End date<span class="required-star">*</span>
+    <% end %>
+    <%= form.date_field :end_date, class: ("field-error" if project.errors[:end_date].any?) %>
+    <% project.errors.full_messages_for(:end_date).each do |message| %>
+      <small class="field-error-message"><%= message %></small>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= form.label :attachments, class: "description-label" do %>
+      <span class="label-title">Attachments</span><span class="optional-label">(optional)</span>
+    <% end %>
+    <% if project.persisted? && project.attachments.attached? %>
+      <div class="existing-attachments">
+        <% project.attachments.each do |attachment| %>
+          <div class="attachment-name">
+            <%= attachment.filename %>
+              <label> <%= check_box_tag "project[remove_attachment_ids][]", attachment.id, false, id: "remove_attachment_#{attachment.id}" %></label>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= form.file_field :attachments, multiple: true, direct_upload: true, id: "project_attachments" %>
+    <small> You can upload one or more files. </small>
+    <div id="pending-project-attachments">
+      <% if params.dig(:project, :attachments).present? %>
+        <% Array(params[:project][:attachments]).each do |signed_id| %>
+          <% next if signed_id.blank? %>
+          <% blob = ActiveStorage::Blob.find_signed(signed_id) rescue nil %>
+          <% if blob %>
+            <div class="pending-attachment" data-signed-id="<%= signed_id %>">
+              <span> 📎 <%= blob.filename %> </span>
+              <button type="button" class="remove-project-attachment"> X </button>
+              <%= hidden_field_tag "project[attachments][]", signed_id, data: { attachment_id: signed_id } %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= form.label :member_ids do %>
+      Project members<span class="required-star">*</span>
+    <% end %>
     <details class="members-dropdown">
       <summary class="members-dropdown-button">
         <span>Select Project Members</span>
         <span class="dropdown-arrow">▼</span>
       </summary>
       <div class="members-dropdown-menu">
-        <%= form.collection_select :member_ids, User.employee, :id, :name, {}, { multiple: true, class: "project-members-select" } %>
+        <%= form.collection_select :member_ids, User.employee, :id, :name, {},{ 
+        multiple: true,  class: project.errors[:member_ids].any? ? "project-members-select field-error" : "project-members-select" } %>
       </div>
     </details>
+    <% project.errors.full_messages_for(:project_members).each do |message| %>
+      <small class="field-error-message"><%= message %></small>
+    <% end %>
     <small class="form-help"> Select one or more employees for this project. </small>
   </div>
   <%= form.submit "Save Project", class: "button button-primary" %>

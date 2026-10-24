@@ -7,6 +7,7 @@ pin "@hotwired/stimulus-loading", to: "stimulus-loading.js"
 
 pin "task_form", to: "task_form.js"
 pin "project_form", to: "project_form.js"
+pin "password_toggle"
 pin "@rails/activestorage", to: "activestorage.esm.js"
 
 pin_all_from "app/javascript/controllers", under: "controllers"
