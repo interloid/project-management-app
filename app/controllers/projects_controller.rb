@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
 
   def show
     authorize @project
-    @comments = @project.comments.includes(:user).order(created_at: :desc)
+    @comments = @project.comments.includes(:user).order(created_at: :desc).to_a
   end
 
   def new

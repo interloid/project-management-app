@@ -72,17 +72,8 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    tasks = Task
-
-    if action_name == "show"
-      tasks = tasks.includes(:project, :assignee)
-    end
-
-    @task = tasks.find_by(id: params[:id])
-
-    unless @task
-      redirect_to tasks_path, alert: "Task not found."
-    end
+    @task = Task.find_by(id: params[:id])
+    redirect_to tasks_path, alert: "Task not found." unless @task
   end
 
   def load_form_data
