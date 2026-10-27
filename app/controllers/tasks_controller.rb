@@ -22,7 +22,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
 
-    return render_invalid_task if @task.invalid?
+    return render_form_with_errors(:new) if @task.invalid?
 
     authorize @task
 
@@ -30,7 +30,7 @@ class TasksController < ApplicationController
       TaskCreatedJob.perform_later(@task.id)
       redirect_to @task, notice: "Task created successfully."
     else
-      render_invalid_task
+      render_form_with_errors(:new)
     end
 
   rescue ActiveRecord::RecordNotFound
@@ -51,7 +51,7 @@ class TasksController < ApplicationController
 
       redirect_to @task, notice: "Task updated successfully."
     else
-      render_edit_errors
+      render_form_with_errors(:edit)
     end
   end
 
@@ -68,38 +68,24 @@ class TasksController < ApplicationController
   private
 
   def set_task
-    tasks = Task
-
-    if action_name == "show"
-      tasks = tasks.includes(:project, :assignee)
-    end
-
-    @task = tasks.find_by(id: params[:id])
-
-    unless @task
-      redirect_to tasks_path, alert: "Task not found."
-    end
+    @task = Task.find_by(id: params[:id])
+    redirect_to tasks_path, alert: "Task not found." unless @task
   end
 
-  def render_invalid_task
+  def render_form_with_errors(template)
     load_form_data
-    render :new, status: :unprocessable_entity
-  end
-
-  def render_edit_errors
-    load_form_data
-    render :edit, status: :unprocessable_entity
+    render template, status: :unprocessable_entity
   end
 
   def load_form_data
     @projects = policy_scope(Project)
 
-    project = @task.project
-    @assignees = project ? project.members : User.none
+    @assignees = @task.project&.members || User.none
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :priority, :status, :start_date, :end_date, :project_id, :assignee_id, attachments: [])
+    params.require(:task).permit(:title, :description, :priority, :status, :start_date, :end_date, :project_id, :assignee_id, attachments: [],
+      remove_attachment_ids: []).except(:remove_attachment_ids)
   end
 
   def task_attributes

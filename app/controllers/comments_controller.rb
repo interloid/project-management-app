@@ -24,8 +24,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if @comment.user == current_user || current_user.admin?
-      @comment.destroy
+    if @comment.destroy
       redirect_to @commentable, notice: "Comment deleted successfully."
     else
       redirect_to @commentable, alert: "You are not authorized to delete this comment."
@@ -54,7 +53,7 @@ class CommentsController < ApplicationController
     @comment = @commentable.comments.find(params[:id])
     authorize @comment
   end
-  
+
   def comment_params
     params.require(:comment).permit(:content)
   end

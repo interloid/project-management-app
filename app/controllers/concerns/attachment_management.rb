@@ -15,14 +15,22 @@ module AttachmentManagement
     attachment_record.attachments.attach(files)
   end
 
+  def attachment_param_key
+    controller_name.singularize.to_sym
+  end
+
+  def attachment_record
+    instance_variable_get("@#{attachment_param_key}")
+  end
+
   def remove_attachments
     attachment_ids = attachment_params[:remove_attachment_ids].to_a.reject(&:blank?)
     return if attachment_ids.empty?
 
-    attachment_record.attachments_attachments.where(id: attachment_ids).each(&:purge)
+    attachment_record.attachments_attachments.where(id: attachment_ids).each(&:purge_later)
   end
 
   def attachment_params
-    params.require(attachment_param_key).permit(attachments: [],remove_attachment_ids: [])
+    params.require(attachment_param_key).permit(attachments: [], remove_attachment_ids: [])
   end
 end

@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
 
   def show
     authorize @project
-    @comments = @project.comments.includes(:user).order(created_at: :desc)
+    @comments = @project.comments.includes(:user).order(created_at: :desc).to_a
   end
 
   def new
@@ -39,7 +39,7 @@ class ProjectsController < ApplicationController
   def update
     authorize @project
     @project.assign_attributes(project_attributes)
-    
+
     if @project.save
       update_attachments
 
@@ -72,7 +72,8 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, :status, :start_date, :end_date, member_ids: [], attachments: [])
+    params.require(:project).permit(:name, :description, :status, :start_date, :end_date, member_ids: [], attachments: [], 
+      remove_attachment_ids: []).except(:remove_attachment_ids)
   end
 
   def project_attributes
