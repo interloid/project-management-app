@@ -49,7 +49,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 group :development, :test do
-  # Bullet gem is handle to n+1 quries, missing eager loading
+  # Detect N+1 queries and unused eager loading
   gem "bullet"
 
   # Static analysis: code smells, duplication and complexity
