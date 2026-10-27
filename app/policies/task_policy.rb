@@ -4,19 +4,19 @@ class TaskPolicy < ApplicationPolicy
   end
 
   def show?
-    user.admin? || record.assignee == user || record.project.owner == user || record.project.members.include?(user)
+    user.admin? || record.assignee_id == user.id || record.project.owner_id == user.id || record.project.members.include?(user)
   end
 
   def create?
-    user.admin? || record.project.owner == user || record.project.members.include?(user)
+    user.admin? || record.project.owner_id == user.id || record.project.members.include?(user)
   end
 
   def update?
-    user.admin? || record.assignee == user || record.project.owner == user
+    user.admin? || record.assignee_id == user.id || record.project.owner_id == user.id
   end
 
   def destroy?
-    user.admin? || record.project.owner == user
+    user.admin? || record.project.owner_id == user.id
   end
 
   class Scope < ApplicationPolicy::Scope

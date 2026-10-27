@@ -10,6 +10,7 @@ class TasksController < ApplicationController
 
   def show
     authorize @task
+    @comments = @task.comments.includes(:user).order(created_at: :desc).to_a
   end
 
   def new
@@ -62,9 +63,9 @@ class TasksController < ApplicationController
     authorize @task
 
     if @task.destroy
-    redirect_to tasks_path, notice: "Task deleted successfully."
+      redirect_to tasks_path, notice: "Task deleted successfully."
     else
-    redirect_to task_path(@task), alert: "Task could not be deleted."
+      redirect_to task_path(@task), alert: "Task could not be deleted."
     end
   end
 
@@ -72,11 +73,7 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find_by(id: params[:id])
-
-    unless @task
-      redirect_to tasks_path, alert: "Task not found."
-      nil
-    end
+    redirect_to tasks_path, alert: "Task not found." unless @task
   end
 
   def load_form_data
@@ -100,11 +97,8 @@ class TasksController < ApplicationController
   end
 
   def remove_attachments
-    attachment_ids = params.dig(:task, :remove_attachment_ids)
-    attachment_ids = Array(attachment_ids).reject(&:blank?)
-    attachment_ids.each do |attachment_id|
-      attachment = @task.attachments.find_by(id: attachment_id)
-      attachment&.purge
-    end
+    attachment_ids = Array(params.dig(:task, :remove_attachment_ids)).reject(&:blank?)
+    return if attachment_ids.empty?
+    @task.attachments_attachments.where(id: attachment_ids).each(&:purge)
   end
 end
