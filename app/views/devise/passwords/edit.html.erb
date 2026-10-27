@@ -13,16 +13,26 @@
             <%= @minimum_password_length %> characters minimum
           </small>
         <% end %>
-        <%= f.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "Enter your new password",
-              class: ("form-control field-error" if resource.errors[:password].any?) || "form-control" %>
+        <div class="password-wrapper">
+          <%= f.password_field :password, id: "reset_password", autofocus: true, autocomplete: "new-password", placeholder: "Enter your new password",
+                class: ("form-control field-error" if resource.errors[:password].any?) || "form-control" %>
+          <button type="button" class="toggle-password" data-target="reset_password" aria-label="Show password" aria-pressed="false">
+            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
         <% resource.errors.full_messages_for(:password).each do |message| %>
           <small class="field-error-message"><%= message %></small>
         <% end %>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, "Confirm New Password" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm your new password",
-              class: ("form-control field-error" if resource.errors[:password_confirmation].any?) || "form-control" %>
+        <div class="password-wrapper">
+          <%= f.password_field :password_confirmation, id: "reset_password_confirmation", autocomplete: "new-password", placeholder: "Confirm your new password",
+                class: ("form-control field-error" if resource.errors[:password_confirmation].any?) || "form-control" %>
+          <button type="button" class="toggle-password" data-target="reset_password_confirmation" aria-label="Show password" aria-pressed="false">
+            <i class="fa-regular fa-eye" aria-hidden="true"></i>
+          </button>
+        </div>
         <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
           <small class="field-error-message"><%= message %></small>
         <% end %>
@@ -31,8 +41,6 @@
         <%= f.submit "Change My Password", class: "button auth-button" %>
       </div>
     <% end %>
-    <div class="auth-links">
       <%= render "devise/shared/links" %>
-    </div>
   </div>
 </div>

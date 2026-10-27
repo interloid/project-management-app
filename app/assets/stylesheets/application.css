@@ -170,10 +170,6 @@ main {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
 }
 
-.actions {
-  margin-top: 20px;
-}
-
 .remember-me {
   display: flex;
   align-items: center;
@@ -658,7 +654,6 @@ main {
 }
 
 @media (max-width: 768px) {
-
   .task-grid,
   .task-show-grid {
     grid-template-columns: 1fr;
@@ -682,9 +677,21 @@ main {
 
 /* Project Members Dropdown */
 
+/* Red border around the outer dropdown button when validation fails */
+.members-dropdown.field-error .members-dropdown-button {
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+}
+
+/* Red border around the select element when validation fails */
+.project-members-select.field-error {
+  border: 1px solid #dc2626;
+}
+
 .members-dropdown {
   position: relative;
   width: 100%;
+  border-radius: 8px;
 }
 
 .members-dropdown-button {
@@ -714,11 +721,6 @@ main {
 
 .members-dropdown-button:hover {
   border-color: #9ca3af;
-}
-
-.members-dropdown-button:focus {
-  outline: none;
-  border-color: #2563eb;
 }
 
 .dropdown-arrow {
@@ -1031,7 +1033,6 @@ main {
 
 .password-wrapper {
   position: relative;
-  /* display: flex; */
   align-items: center;
 }
 
@@ -1052,7 +1053,7 @@ main {
   padding: 5px;
   line-height: 1;
   color: #0e0f0f;
-background: transparent;
+  background: transparent;
 }
 
 .toggle-password:focus-visible {

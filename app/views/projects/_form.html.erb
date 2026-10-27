@@ -72,14 +72,14 @@
     <%= form.label :member_ids do %>
       Project members<span class="required-star">*</span>
     <% end %>
-    <details class="members-dropdown">
+    <details class="members-dropdown <%= 'field-error' if project.errors[:project_members].any? %>">
       <summary class="members-dropdown-button">
         <span>Select Project Members</span>
         <span class="dropdown-arrow">▼</span>
       </summary>
       <div class="members-dropdown-menu">
-        <%= form.collection_select :member_ids, User.employee, :id, :name, {},{ 
-        multiple: true,  class: project.errors[:member_ids].any? ? "project-members-select field-error" : "project-members-select" } %>
+        <%= form.collection_select :member_ids, User.employee, :id, :name, {},{
+        multiple: true,  class: project.errors[:project_members].any? ? "project-members-select field-error" : "project-members-select" } %>
       </div>
     </details>
     <% project.errors.full_messages_for(:project_members).each do |message| %>
