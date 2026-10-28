@@ -1053,7 +1053,6 @@ main {
   padding: 5px;
   line-height: 1;
   color: #0e0f0f;
-  background: transparent;
 }
 
 .toggle-password:focus-visible {
@@ -1075,7 +1074,7 @@ main {
 
 
 .members-dropdown-button.field-error {
-  border: 1px solid red !important;
+  border: 1px solid #dc2626 !important;
   border-radius: 4px;
 }
 
@@ -1112,7 +1111,6 @@ main {
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
-
 }
 
 /* Hover effect */

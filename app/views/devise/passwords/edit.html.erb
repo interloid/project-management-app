@@ -4,6 +4,11 @@
       <h2>Change Your Password</h2>
       <p>Create a secure, memorable password.</p>
     </div>
+    <% resource.errors.full_messages_for(:reset_password_token).each do |message| %>
+      <div class="flash flash-error">
+        <%= message %>
+      </div>
+    <% end %>
     <%= form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: "auth-form" } do |f| %>
       <%= f.hidden_field :reset_password_token %>
       <div class="form-group">
