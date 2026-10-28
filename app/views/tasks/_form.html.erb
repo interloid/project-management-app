@@ -20,7 +20,7 @@
         Project<span class="required-star">*</span>
       <% end %>
       <%= form.collection_select :project_id, @projects, :id, :name, { prompt: "Select Project" }, { id: "task_project_id",
-          class: ( "field-error" if task.errors[:project_id].any? || task.errors[:project].any? ) } %>
+          class: ("field-error" if task.errors[:project_id].any? || task.errors[:project].any?) } %>
       <% (task.errors.full_messages_for(:project_id) + task.errors.full_messages_for(:project)).uniq.each do |message| %>
         <small class="field-error-message"><%= message %></small>
       <% end %>
@@ -30,7 +30,7 @@
         Assignee<span class="required-star">*</span>
       <% end %>
       <%= form.select :assignee_id, options_from_collection_for_select(@assignees, :id, :name, task.assignee_id), { prompt: "Select Assignee" },
-            { id: "task_assignee_id", class: ( "field-error" if task.errors[:assignee_id].any? || task.errors[:assignee].any? ) } %>
+            { id: "task_assignee_id", class: ("field-error" if task.errors[:assignee_id].any? || task.errors[:assignee].any?) } %>
       <% (task.errors.full_messages_for(:assignee_id) + task.errors.full_messages_for(:assignee)).uniq.each do |message| %>
         <small class="field-error-message"><%= message %></small>
       <% end %>

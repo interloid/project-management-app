@@ -78,8 +78,8 @@
         <span class="dropdown-arrow">▼</span>
       </summary>
       <div class="members-dropdown-menu">
-        <%= form.collection_select :member_ids, User.employee, :id, :name, {},{
-        multiple: true,  class: project.errors[:project_members].any? ? "project-members-select field-error" : "project-members-select" } %>
+        <%= form.collection_select :member_ids, User.employee, :id, :name, {}, {
+        multiple: true, class: project.errors[:project_members].any? ? "project-members-select field-error" : "project-members-select" } %>
       </div>
     </details>
     <% project.errors.full_messages_for(:project_members).each do |message| %>

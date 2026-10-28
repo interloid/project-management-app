@@ -20,7 +20,7 @@
         <% end %>
         <div class="password-wrapper">
           <%= f.password_field :password, id: "reset_password", autofocus: true, autocomplete: "new-password", placeholder: "Enter your new password",
-                class: ("form-control field-error" if resource.errors[:password].any?) || "form-control" %>
+                class: "form-control #{'field-error' if resource.errors[:password].any?}" %>
           <button type="button" class="toggle-password" data-target="reset_password" aria-label="Show password" aria-pressed="false">
             <i class="fa-regular fa-eye" aria-hidden="true"></i>
           </button>
@@ -33,7 +33,7 @@
         <%= f.label :password_confirmation, "Confirm New Password" %>
         <div class="password-wrapper">
           <%= f.password_field :password_confirmation, id: "reset_password_confirmation", autocomplete: "new-password", placeholder: "Confirm your new password",
-                class: ("form-control field-error" if resource.errors[:password_confirmation].any?) || "form-control" %>
+                class: "form-control #{'field-error' if resource.errors[:password_confirmation].any?}"  %>
           <button type="button" class="toggle-password" data-target="reset_password_confirmation" aria-label="Show password" aria-pressed="false">
             <i class="fa-regular fa-eye" aria-hidden="true"></i>
           </button>
@@ -46,6 +46,6 @@
         <%= f.submit "Change My Password", class: "button auth-button" %>
       </div>
     <% end %>
-      <%= render "devise/shared/links" %>
+    <%= render "devise/shared/links" %>
   </div>
 </div>
