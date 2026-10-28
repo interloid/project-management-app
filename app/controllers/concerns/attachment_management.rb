@@ -31,6 +31,6 @@ module AttachmentManagement
   end
 
   def attachment_params
-    params.require(attachment_param_key).permit(attachments: [], remove_attachment_ids: [])
+    params.require(attachment_param_key).slice(:attachments, :remove_attachment_ids).permit(attachments: [], remove_attachment_ids: [])
   end
 end

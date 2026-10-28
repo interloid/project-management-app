@@ -72,19 +72,10 @@ class ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:name, :description, :status, :start_date, :end_date, member_ids: [], attachments: [], 
-      remove_attachment_ids: []).except(:remove_attachment_ids)
+    params.require(:project).permit(:name, :description, :status, :start_date, :end_date, member_ids: [], attachments: [])
   end
 
   def project_attributes
     project_params.except(:attachments)
-  end
-
-  def attachment_record
-    @project
-  end
-
-  def attachment_param_key
-    :project
   end
 end

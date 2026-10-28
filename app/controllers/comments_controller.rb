@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to @commentable, notice: "Comment deleted successfully."
     else
-      redirect_to @commentable, alert: "You are not authorized to delete this comment."
+      redirect_to @commentable, alert: "Comment could not be deleted."
     end
   end
 
