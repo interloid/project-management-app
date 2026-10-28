@@ -79,24 +79,14 @@ class TasksController < ApplicationController
 
   def load_form_data
     @projects = policy_scope(Project)
-
     @assignees = @task.project&.members || User.none
   end
 
   def task_params
-    params.require(:task).permit(:title, :description, :priority, :status, :start_date, :end_date, :project_id, :assignee_id, attachments: [],
-      remove_attachment_ids: []).except(:remove_attachment_ids)
+    params.require(:task).permit(:title, :description, :priority, :status, :start_date, :end_date, :project_id, :assignee_id, attachments: [])
   end
 
   def task_attributes
     task_params.except(:attachments)
-  end
-
-  def attachment_record
-    @task
-  end
-
-  def attachment_param_key
-    :task
   end
 end
