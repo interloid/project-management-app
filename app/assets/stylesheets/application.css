@@ -1104,15 +1104,20 @@ main {
   transition: color 0.2s ease;
 }
 .auth-link-forgot-password {
-  position: absolute;
-  bottom: 192px;
-  right: 35px;
   color: #2563eb;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+}
+
+.log-form-actions {
+  margin-top: 5px;
+}
 /* Hover effect */
 .auth-link:hover {
   color: #1d4ed8;
