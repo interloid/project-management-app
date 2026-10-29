@@ -4,4 +4,5 @@ import * as ActiveStorage from "@rails/activestorage"
 import "controllers"
 import "task_form"
 import "project_form"
+import "password_toggle"
 ActiveStorage.start()
