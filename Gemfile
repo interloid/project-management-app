@@ -9,7 +9,7 @@ gem "devise", ">= 5.0.4"
 # Rails Authorization:
 gem "pundit", ">= 2.5.2"
 
-gem "json", "2.21.2"
+gem "json", "3.1.0"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use mysql as the database for Active Record
