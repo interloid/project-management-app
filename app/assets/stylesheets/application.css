@@ -64,7 +64,6 @@ main {
 }
 
 .auth-card {
-  position: relative;
   max-width: 450px;
   margin: 50px auto;
   background: white;
@@ -174,7 +173,6 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
 }
 
 .remember-me input[type="checkbox"] {
@@ -607,7 +605,7 @@ main {
 .form-actions {
   display: flex;
   gap: 10px;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .task-show-grid {
@@ -976,7 +974,6 @@ main {
   }
 }
 
-
 /* Comment Action Buttons */
 .comment-actions {
   display: flex;
@@ -1033,6 +1030,7 @@ main {
 
 .password-wrapper {
   position: relative;
+  display: flex;
   align-items: center;
 }
 
@@ -1072,7 +1070,6 @@ main {
   outline-color: #dc2626;
 }
 
-
 .members-dropdown-button.field-error {
   border: 1px solid #dc2626 !important;
   border-radius: 4px;
@@ -1086,6 +1083,9 @@ main {
   gap: 14px;
   margin-top: 22px;
   width: 100%;
+}
+.auth-header {
+  text-align: center;
 }
 
 /* Individual link rows */
@@ -1103,21 +1103,12 @@ main {
   font-weight: 600;
   transition: color 0.2s ease;
 }
-.auth-link-forgot-password {
-  color: #2563eb;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
 
 .remember-forgot {
   display: flex;
   justify-content: space-between;
 }
 
-.log-form-actions {
-  margin-top: 5px;
-}
 /* Hover effect */
 .auth-link:hover {
   color: #1d4ed8;
@@ -1129,12 +1120,6 @@ main {
   margin-left: 4px;
   color: #2563eb;
   font-weight: 700;
-}
-
-/* Forgot Password link */
-.forgot-password {
-  text-align: right;
-  margin-top: -8px;
 }
 
 /* Keep the authentication card links within the card */
@@ -1163,7 +1148,6 @@ main {
   font-weight: 400;
   margin-left: 4px;
 }
-
 
 .required-star {
   color: #dc2626;

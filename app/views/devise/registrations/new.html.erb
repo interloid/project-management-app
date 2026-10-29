@@ -1,58 +1,56 @@
-<div class="auth-page">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h2>Create Account</h2>
-    </div>
-    <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" } do |f| %>
-      <div class="form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Enter your name",
-              class: "form-control #{'field-error' if resource.errors[:name].any?}" %>
-        <% resource.errors.full_messages_for(:name).each do |message| %>
-          <small class="field-error-message"><%= message %></small>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, autocomplete: "email", placeholder: "Enter your email",
-              class: "form-control #{'field-error' if resource.errors[:email].any?}" %>
-        <% resource.errors.full_messages_for(:email).each do |message| %>
-          <small class="field-error-message"><%= message %></small>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password %>
-        <% if @minimum_password_length %>
-          <small class="password-hint"> Minimum <%= @minimum_password_length %> Characters </small>
-        <% end %>
-        <div class="password-wrapper">
-          <%= f.password_field :password, id: "registration_password", autocomplete: "new-password", placeholder: "Enter password",
-                class: "form-control #{'field-error' if resource.errors[:password].any?}" %>
-          <button type="button" class="toggle-password" data-target="registration_password" aria-label="Show password" aria-pressed="false">
-            <i class="fa-regular fa-eye" aria-hidden="true"></i>
-          </button>
-        </div>
-        <% resource.errors.full_messages_for(:password).each do |message| %>
-          <small class="field-error-message"><%= message %></small>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password_confirmation, "Confirm Password" %>
-        <div class="password-wrapper">
-          <%= f.password_field :password_confirmation, id: "registration_password_confirmation", autocomplete: "new-password", placeholder: "Confirm password",
-                class: "form-control #{'field-error' if resource.errors[:password_confirmation].any?}" %>
-          <button type="button" class="toggle-password" data-target="registration_password_confirmation" aria-label="Show password" aria-pressed="false">
-            <i class="fa-regular fa-eye" aria-hidden="true"></i>
-          </button>
-        </div>
-        <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
-          <small class="field-error-message"><%= message %></small>
-        <% end %>
-      </div>
-      <div class="form-actions">
-        <%= f.submit "Create Account", class: "button auth-button" %>
-      </div>
-    <% end %>
-    <%= render "devise/shared/links" %>
+<div class="auth-card">
+  <div class="auth-header">
+    <h2>Create Account</h2>
   </div>
+  <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" } do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", placeholder: "Enter your name",
+            class: "form-control #{'field-error' if resource.errors[:name].any?}" %>
+      <% resource.errors.full_messages_for(:name).each do |message| %>
+        <small class="field-error-message"><%= message %></small>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autocomplete: "email", placeholder: "Enter your email",
+            class: "form-control #{'field-error' if resource.errors[:email].any?}" %>
+      <% resource.errors.full_messages_for(:email).each do |message| %>
+        <small class="field-error-message"><%= message %></small>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+        <small class="password-hint"> Minimum <%= @minimum_password_length %> Characters </small>
+      <% end %>
+      <div class="password-wrapper">
+        <%= f.password_field :password, id: "registration_password", autocomplete: "new-password", placeholder: "Enter password",
+              class: "form-control #{'field-error' if resource.errors[:password].any?}" %>
+        <button type="button" class="toggle-password" data-target="registration_password" aria-label="Show password" aria-pressed="false">
+          <i class="fa-regular fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
+      <% resource.errors.full_messages_for(:password).each do |message| %>
+        <small class="field-error-message"><%= message %></small>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password_confirmation, "Confirm Password" %>
+      <div class="password-wrapper">
+        <%= f.password_field :password_confirmation, id: "registration_password_confirmation", autocomplete: "new-password", placeholder: "Confirm password",
+              class: "form-control #{'field-error' if resource.errors[:password_confirmation].any?}" %>
+        <button type="button" class="toggle-password" data-target="registration_password_confirmation" aria-label="Show password" aria-pressed="false">
+          <i class="fa-regular fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
+      <% resource.errors.full_messages_for(:password_confirmation).each do |message| %>
+        <small class="field-error-message"><%= message %></small>
+      <% end %>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Create Account", class: "button auth-button" %>
+    </div>
+  <% end %>
+  <%= render "devise/shared/links" %>
 </div>

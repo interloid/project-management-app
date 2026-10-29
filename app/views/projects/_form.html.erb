@@ -1,4 +1,14 @@
 <%= form_with model: project, id: "project-form", local: true do |form| %>
+  <% if project.errors[:base].any? %>
+    <div class="flash flash-error">
+      <% project.errors.full_messages_for(:base).each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+  <% project.errors.full_messages_for(:status).each do |message| %>
+    <small class="field-error-message"><%= message %></small>
+  <% end %>
   <div class="form-group">
     <%= form.label :name do %>
       Name<span class="required-star">*</span>

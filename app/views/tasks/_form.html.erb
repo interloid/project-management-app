@@ -1,4 +1,11 @@
 <%= form_with model: task, id: "task-form", local: true do |form| %>
+  <% if task.errors[:base].any? %>
+    <div class="flash flash-error">
+      <% task.errors.full_messages_for(:base).each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= form.label :title do %>
       Task Title<span class="required-star">*</span>

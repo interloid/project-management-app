@@ -1,38 +1,36 @@
-<div class="auth-page">
-  <div class="auth-card">
-    <div class="auth-header">
-      <h2>Welcome Back</h2>
-    </div>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
-      <div class="form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password %>
-        <div class="password-wrapper">
-          <%= f.password_field :password, id: "login_password", autocomplete: "current-password", placeholder: "Enter your password" %>
-          <button type="button" id="toggle_password" class="toggle-password" data-target="login_password" aria-label="Show password" aria-pressed="false">
-            <i class="fa-regular fa-eye" aria-hidden="true"></i>
-          </button>
-        </div>
-      </div>
-      <div class="remember-forgot">
-        <% if devise_mapping.rememberable? %>
-          <div class="remember-me">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me, "Remember me" %>
-          </div>
-        <% end %>
-        <% if devise_mapping.recoverable? %>
-          <%= link_to 'Forgot your password?', new_password_path(resource_name), class: 'auth-link' %>
-        <% end %>
-      </div>
-      
-      <div class="log-form-actions">
-        <%= f.submit "Login", class: "button auth-button" %>
-      </div>
-    <% end %>
-    <%= render "devise/shared/links" %>
+<div class="auth-card">
+  <div class="auth-header">
+    <h2>Welcome Back</h2>
   </div>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Enter your email" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <div class="password-wrapper">
+        <%= f.password_field :password, id: "login_password", autocomplete: "current-password", placeholder: "Enter your password" %>
+        <button type="button" class="toggle-password" data-target="login_password" aria-label="Show password" aria-pressed="false">
+          <i class="fa-regular fa-eye" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="remember-forgot">
+      <% if devise_mapping.rememberable? %>
+        <div class="remember-me">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, "Remember me" %>
+        </div>
+      <% end %>
+      <% if devise_mapping.recoverable? %>
+        <%= link_to "Forgot your password?", new_password_path(resource_name), class: "auth-link" %>
+      <% end %>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "Login", class: "button auth-button" %>
+    </div>
+  <% end %>
+  <%= render "devise/shared/links" %>
 </div>
+
