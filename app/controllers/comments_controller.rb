@@ -24,30 +24,36 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = @commentable.comments.find(params[:id])
-    if @comment.user == current_user || current_user.admin?
-      @comment.destroy
+    if @comment.destroy
       redirect_to @commentable, notice: "Comment deleted successfully."
     else
-      redirect_to @commentable, alert: "You are not authorized to delete this comment."
+      redirect_to @commentable, alert: "Comment could not be deleted."
     end
   end
 
   private
 
   def set_commentable
-    if params[:project_id].present?
-      @commentable = Project.find(params[:project_id])
-      authorize @commentable, :show?
-    elsif params[:task_id].present?
-      @commentable = Task.find(params[:task_id])
-      authorize @commentable, :show?
-    end
+    project_id = params[:project_id]
+    task_id = params[:task_id]
+
+    @commentable =
+      if project_id.present?
+        Project.find(project_id)
+      elsif task_id.present?
+        Task.find(task_id)
+      else
+        raise ActionController::BadRequest, "Project or task ID is required."
+      end
+
+    authorize @commentable, :show?
   end
+
   def set_comment
     @comment = @commentable.comments.find(params[:id])
     authorize @comment
   end
+
   def comment_params
     params.require(:comment).permit(:content)
   end

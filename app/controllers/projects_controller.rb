@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  include AttachmentManagement
   before_action :set_project, only: %i[show edit update destroy members]
 
   def index
@@ -37,11 +38,11 @@ class ProjectsController < ApplicationController
 
   def update
     authorize @project
-
     @project.assign_attributes(project_attributes)
-    remove_attachments
-    attach_new_files
+
     if @project.save
+      update_attachments
+
       redirect_to @project, notice: "Project updated successfully."
     else
       render :edit, status: :unprocessable_entity
@@ -75,20 +76,6 @@ class ProjectsController < ApplicationController
   end
 
   def project_attributes
-    params.require(:project).permit(:name, :description, :status, :start_date, :end_date, member_ids: [])
-  end
-
-  def attach_new_files
-    files = params.dig(:project, :attachments)
-    files = Array(files).reject(&:blank?)
-    return if files.empty?
-    @project.attachments.attach(files)
-  end
-
-  def remove_attachments
-    attachment_ids = Array(params.dig(:project, :remove_attachment_ids)).reject(&:blank?)
-    return if attachment_ids.empty?
-
-    @project.attachments_attachments.where(id: attachment_ids).each(&:purge)
+    project_params.except(:attachments)
   end
 end
