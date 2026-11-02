@@ -6,9 +6,6 @@
       <% end %>
     </div>
   <% end %>
-  <% project.errors.full_messages_for(:status).each do |message| %>
-    <small class="field-error-message"><%= message %></small>
-  <% end %>
   <div class="form-group">
     <%= form.label :name do %>
       Name<span class="required-star">*</span>
