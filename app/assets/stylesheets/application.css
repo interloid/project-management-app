@@ -169,15 +169,10 @@ main {
   box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
 }
 
-.actions {
-  margin-top: 20px;
-}
-
 .remember-me {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 18px;
 }
 
 .remember-me input[type="checkbox"] {
@@ -610,7 +605,7 @@ main {
 .form-actions {
   display: flex;
   gap: 10px;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .task-show-grid {
@@ -657,7 +652,6 @@ main {
 }
 
 @media (max-width: 768px) {
-
   .task-grid,
   .task-show-grid {
     grid-template-columns: 1fr;
@@ -681,9 +675,21 @@ main {
 
 /* Project Members Dropdown */
 
+/* Red border around the outer dropdown button when validation fails */
+.members-dropdown.field-error .members-dropdown-button {
+  border: 1px solid #dc2626;
+  border-radius: 8px;
+}
+
+/* Red border around the select element when validation fails */
+.project-members-select.field-error {
+  border: 1px solid #dc2626;
+}
+
 .members-dropdown {
   position: relative;
   width: 100%;
+  border-radius: 8px;
 }
 
 .members-dropdown-button {
@@ -713,11 +719,6 @@ main {
 
 .members-dropdown-button:hover {
   border-color: #9ca3af;
-}
-
-.members-dropdown-button:focus {
-  outline: none;
-  border-color: #2563eb;
 }
 
 .dropdown-arrow {
@@ -973,7 +974,6 @@ main {
   }
 }
 
-
 /* Comment Action Buttons */
 .comment-actions {
   display: flex;
@@ -1028,6 +1028,130 @@ main {
   margin-bottom: 10px;
 }
 
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  bottom: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  line-height: 1;
+  color: #0e0f0f;
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid #4f46e5;
+  border-radius: 4px;
+}
+
+.field-error-message {
+  display: block;
+  color: #dc2626;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.field-error {
+  border: 1px solid #dc2626 !important;
+  outline-color: #dc2626;
+}
+
+.members-dropdown-button.field-error {
+  border: 1px solid #dc2626 !important;
+  border-radius: 4px;
+}
+
+/* Authentication links container */
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  width: 100%;
+}
+.auth-header {
+  text-align: center;
+}
+
+/* Individual link rows */
+.auth-link-item {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* Shared link styling */
+.auth-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Hover effect */
+.auth-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Highlight Sign Up */
+.auth-link-primary {
+  margin-left: 4px;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+/* Keep the authentication card links within the card */
+.auth-card .auth-links {
+  box-sizing: border-box;
+}
 
 
+/* Main label */
+.description-label {
+  display: block;
+  margin-bottom: 8px;
+}
 
+/* Description text */
+.label-title {
+  color: #1e293b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Optional text */
+.optional-label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.required-star {
+  color: #dc2626;
+  font-size: 16px;
+  font-weight: 700;
+  margin-left: 2px;
+}
